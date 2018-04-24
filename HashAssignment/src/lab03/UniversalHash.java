@@ -8,8 +8,10 @@ public class UniversalHash implements HashFunction{
 	int [][] hashArr;
 	
 	public UniversalHash(int tableSize){
-		this.binaryHTSize= Integer.toBinaryString(tableSize).length();
+		this.binaryHTSize= Integer.toBinaryString(tableSize).length()-1;
 		this.hashArr = new int[binaryHTSize][U_BOUND];
+		
+		
 		createHashMatrix();
 	}
 	private UniversalHash(){
@@ -35,8 +37,9 @@ public class UniversalHash implements HashFunction{
 		}
 		temp += binaryOfKey;
 		binaryOfKey = temp;
+		int binary = 0;
 		for(int i = 0; i < binaryHTSize; i++){
-				int binary = 0;
+				binary = 0;
 				for(int j = 0; j < U_BOUND; j++){
 					if(binaryOfKey.charAt(j)== '1'){
 						binary += hashArr[i][j] ;
@@ -47,7 +50,12 @@ public class UniversalHash implements HashFunction{
 				
 				
 		}
-		int num = Integer.parseInt(hashValueInBinary, 2);
+		int num;
+		if(binary != 0){
+			num = Integer.parseInt(hashValueInBinary, 2);
+		}else{
+			num = 0;
+		}
 		return num;
 	}
 }
