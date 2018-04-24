@@ -1,6 +1,5 @@
 package lab03;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
@@ -24,7 +23,7 @@ public class PerfectHash implements PerfectHashing{
 	public void setUniverseOfKeys(int[] setOfKeys) {
 		this.hashTableSize = setOfKeys.length;
 		this.keys = setOfKeys;
-		this.universalHash = new UniversalHash(hashTableSize);
+		this.universalHash = new UniversalHash(hashTableSize-1);
 		hashTable = new subTable[hashTableSize];
 	}
 
@@ -80,6 +79,7 @@ public class PerfectHash implements PerfectHashing{
 		private int hashTableSubSize;
 		
 		public subTable() {
+			keys = new LinkedList<>();
 			hashTableSub = new int[0];
 			numberOfKeys=0;
 		}
@@ -90,11 +90,13 @@ public class PerfectHash implements PerfectHashing{
 			this.hashTableSubSize=(int) Math.pow(numberOfKeys+1,2);
 			 hashTableSub = new int[this.hashTableSubSize] ;
 			numberOfKeys++;
-			universalHashSub = new UniversalHash(hashTableSubSize);
+			System.out.println(hashTableSubSize +"i tell size is");
+			universalHashSub = new UniversalHash(hashTableSubSize-1);
 			keys.add(new Integer(key));
 		ListIterator<Integer> i =keys.listIterator();
 				while(i.hasNext()){
 					int k =i.next().intValue();
+					System.out.println(universalHashSub.hashKey(k)+" that what you gave ");
 					if(hashTableSub[universalHashSub.hashKey(k)]!=EmptySlot){
 						System.out.println("collision in inner hashtable");
 					}
