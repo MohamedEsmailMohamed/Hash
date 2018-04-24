@@ -23,7 +23,7 @@ public class PerfectHash implements PerfectHashing{
 	public void setUniverseOfKeys(int[] setOfKeys) {
 		this.hashTableSize = setOfKeys.length;
 		this.keys = setOfKeys;
-		this.universalHash = new UniversalHash(hashTableSize-1);
+		this.universalHash = new UniversalHash(hashTableSize);
 		hashTable = new subTable[hashTableSize];
 	}
 
@@ -91,7 +91,7 @@ public class PerfectHash implements PerfectHashing{
 			 hashTableSub = new int[this.hashTableSubSize] ;
 			numberOfKeys++;
 			System.out.println(hashTableSubSize +"i tell size is");
-			universalHashSub = new UniversalHash(hashTableSubSize-1);
+			universalHashSub = new UniversalHash(hashTableSubSize);
 			keys.add(new Integer(key));
 		ListIterator<Integer> i =keys.listIterator();
 				while(i.hasNext()){
