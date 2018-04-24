@@ -86,22 +86,45 @@ public class PerfectHash implements PerfectHashing{
 		public HashFunction getuniversalHashFunctions() {
 			return this.universalHashSub;
 		}
+		
 		public void addToUniverseOfKeys(int key) {
 			this.hashTableSubSize=(int) Math.pow(numberOfKeys+1,2);
 			 hashTableSub = new int[this.hashTableSubSize] ;
 			numberOfKeys++;
-			System.out.println(hashTableSubSize +"i tell size is");
 			universalHashSub = new UniversalHash(hashTableSubSize);
 			keys.add(new Integer(key));
 		ListIterator<Integer> i =keys.listIterator();
 				while(i.hasNext()){
 					int k =i.next().intValue();
-					System.out.println(universalHashSub.hashKey(k)+" that what you gave ");
+					System.out.println(universalHashSub.hashKey(k)+" uni hashing--ky "+k);
+					if(hashTableSub[universalHashSub.hashKey(k)]==k){
+						continue;
+					}else
 					if(hashTableSub[universalHashSub.hashKey(k)]!=EmptySlot){
-						System.out.println("collision in inner hashtable");
+						rebuild();
+						return;
 					}
 					hashTableSub[universalHashSub.hashKey(k)]=k;
 				}
+		}
+		private void rebuild(){
+			 hashTableSub = new int[this.hashTableSubSize] ;
+			this.universalHashSub= new UniversalHash(this.hashTableSubSize);
+			ListIterator<Integer> i =keys.listIterator();
+			while(i.hasNext()){
+				int k =i.next().intValue();
+				
+				System.out.println(universalHashSub.hashKey(k)+" uni hashing--RE---ky "+k);
+				if(hashTableSub[universalHashSub.hashKey(k)]==k){
+					continue;
+				}else
+				if(hashTableSub[universalHashSub.hashKey(k)]!=EmptySlot){
+					rebuild();
+					return;
+				}
+				hashTableSub[universalHashSub.hashKey(k)]=k;
+			}
+			System.out.println("rebuilt Success");
 		}
 		public boolean get(int key) {
 			return this.hashTableSub[universalHashSub.hashKey(key)]!=EmptySlot ;
