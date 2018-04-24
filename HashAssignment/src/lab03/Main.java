@@ -15,7 +15,6 @@ public class Main implements IHash{
 	int [][] hashArr;
 	int [] hashTable;
 	public Main(int [] setArr){
-		
 		this.setArr = setArr;
 		if(setArr.length < (int)Math.round(Math.pow(Integer.MAX_VALUE,0.5))){
 			hashTableSize =setArr.length * setArr.length;
@@ -43,15 +42,12 @@ public class Main implements IHash{
 		for(int i = 0; i < binaryHTSize; i++){
 			for(int j = 0; j < U_BOUND; j++){
 				this.hashArr[i][j]= randGenerator.nextInt(2);
-				//System.out.print(this.hashArr[i][j]);
 			}
-			//System.out.println();
 		}
 	}
 	@Override
 	public boolean creatHashTable(){
-		//int m =(int) Math.round(Math.pow(setArr.length, 2));
-		//String b =  Integer.toBinaryString(m);
+		
 		createHashMatrix();
 		hashTable = new int[hashTableSize];
 		for(int i = 0; i < hashTableSize; i++){
@@ -71,7 +67,6 @@ public class Main implements IHash{
 	@Override
 	public int hashKey(int key) {
 		String hashValueInBinary = new String();
-		
 		String binaryOfKey = Integer.toBinaryString(key);
 		int diff = U_BOUND - binaryOfKey.length();
 		String temp = new String();
@@ -112,7 +107,7 @@ public class Main implements IHash{
 	public int search(int key){
 		return hashTable[hashKey(key)];
 	}
-	
+
 	@Override
 	public int setHashN1(){
 		
@@ -131,8 +126,8 @@ public class Main implements IHash{
 		//		"D:\\collage\\2nd year\\2nd Semester\\5 Data Structure II\\2_Labs\\testCases_lab3\\keys10001000.txt");
 		//FileReader in = new FileReader(
 			//	"D:\\collage\\2nd year\\2nd Semester\\5 Data Structure II\\2_Labs\\testCases_lab3\\keys100001000000.txt");
-		FileReader in = new FileReader("C:\\Users\\ABDO\\Desktop\\2nd S 2nd Y\\tc3\\testCases_lab4\\keys10000001000000.txt"
-				);
+		FileReader in = new FileReader(
+				"D:\\collage\\2nd year\\2nd Semester\\5 Data Structure II\\2_Labs\\testCases_lab3\\keys10000001000000.txt");
 	    BufferedReader br = new BufferedReader(in);
 	    
 	    String s = br.readLine();
@@ -145,19 +140,10 @@ public class Main implements IHash{
 	    	//System.out.println(arrSet[i]);
 	    }
 	    System.out.println(arrSet.length);
-	  //  Main x = new Main(arrSet);
+	    Main x = new Main(arrSet);
 	    
-	   // System.out.println(x.setHashN2());
-	    //System.out.println(x.search(475860));
-	    PerfectHashing p = new PerfectHash();
-p.setUniverseOfKeys(arrSet);
-try{
-p.buildTable();
-}catch(Exception e)
-{
-	throw new RuntimeException(e);
-}
-
+	    System.out.println(x.setHashN2());
+	    System.out.println(x.search(475860));
 	}
 	
 	
