@@ -39,7 +39,8 @@ public class PerfectHash implements PerfectHashing{
 	}
 
 	@Override
-	public void buildTable() throws Exception {
+	public int buildTable() throws Exception {
+		int counter=0;
 		if(this.keys==null){
 			throw new RuntimeException("Can't Build without setting setOfKeys");
 		}else{
@@ -48,7 +49,7 @@ public class PerfectHash implements PerfectHashing{
 				subTable sub;
 				if(hashTable[hashedKey]==null){
 				 sub = new subTable();
-					sub.addToUniverseOfKeys(keys[i]);
+					counter+=sub.addToUniverseOfKeys(keys[i]);
 					hashTable[hashedKey]=sub;
 				}else{
 					System.out.println("collision in outer hash table");
@@ -58,6 +59,7 @@ public class PerfectHash implements PerfectHashing{
 				
 			}
 		}
+		return counter;
 	}
 
 	@Override
@@ -87,7 +89,7 @@ public class PerfectHash implements PerfectHashing{
 			return this.universalHashSub;
 		}
 		
-		public void addToUniverseOfKeys(int key) {
+		public int addToUniverseOfKeys(int key) {
 			this.hashTableSubSize=(int) Math.pow(numberOfKeys+1,2);
 			 hashTableSub = new int[this.hashTableSubSize] ;
 			numberOfKeys++;
@@ -101,13 +103,15 @@ public class PerfectHash implements PerfectHashing{
 						continue;
 					}else
 					if(hashTableSub[universalHashSub.hashKey(k)]!=EmptySlot){
-						rebuild();
-						return;
+						return rebuild();
+						
 					}
 					hashTableSub[universalHashSub.hashKey(k)]=k;
 				}
+				return 0;
 		}
-		private void rebuild(){
+		private int rebuild(){
+			
 			 hashTableSub = new int[this.hashTableSubSize] ;
 			this.universalHashSub= new UniversalHash(this.hashTableSubSize);
 			ListIterator<Integer> i =keys.listIterator();
@@ -119,12 +123,13 @@ public class PerfectHash implements PerfectHashing{
 					continue;
 				}else
 				if(hashTableSub[universalHashSub.hashKey(k)]!=EmptySlot){
-					rebuild();
-					return;
+					
+					return rebuild()+1;
 				}
 				hashTableSub[universalHashSub.hashKey(k)]=k;
 			}
 			System.out.println("rebuilt Success");
+			return 0;
 		}
 		public boolean get(int key) {
 			return this.hashTableSub[universalHashSub.hashKey(key)]!=EmptySlot ;

@@ -23,5 +23,5 @@ public interface PerfectHashing {
 	   to be set before 
 	 * @throws Exception , if data  hasn't been set 
 	 */
-	void buildTable() throws Exception;
+	int buildTable() throws Exception;
 }
