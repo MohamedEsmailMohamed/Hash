@@ -94,7 +94,6 @@ public class PerfectHash implements PerfectHashing{
 			 hashTableSub = new int[this.hashTableSubSize] ;
 			numberOfKeys++;
 			universalHashSub = new UniversalHash(hashTableSubSize);
-			keys.add(new Integer(key));
 		ListIterator<Integer> i =keys.listIterator();
 				while(i.hasNext()){
 					int k =i.next().intValue();
@@ -103,9 +102,13 @@ public class PerfectHash implements PerfectHashing{
 						continue;
 					}else
 					if(hashTableSub[universalHashSub.hashKey(k)]!=EmptySlot){
+						keys.add(new Integer(key));
+
 						return rebuild();
 						
 					}
+					keys.add(new Integer(key));
+
 					hashTableSub[universalHashSub.hashKey(k)]=k;
 				}
 				return 0;

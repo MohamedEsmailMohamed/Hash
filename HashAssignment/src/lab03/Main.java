@@ -128,7 +128,7 @@ public class Main implements IHash{
 			//	"D:\\collage\\2nd year\\2nd Semester\\5 Data Structure II\\2_Labs\\testCases_lab3\\keys100001000000.txt");
 	//	FileReader in = new FileReader(
 	//			"D:\\collage\\2nd year\\2nd Semester\\5 Data Structure II\\2_Labs\\testCases_lab3\\keys10000001000000.txt");
-		FileReader in = new FileReader("C:\\Users\\ABDO\\Desktop\\2nd S 2nd Y\\tc3\\testCases_lab4\\keys10000001000000.txt"
+		FileReader in = new FileReader("C:\\Users\\ABDO\\Desktop\\2nd S 2nd Y\\tc3\\testCases_lab4\\keys1001000.txt"
 				);
 		//FileReader in = new FileReader("D:\\collage\\2nd year\\2nd Semester\\5 Data Structure II\\2_Labs\\testCases_lab3\\keys10000001000000.txt"
 		//		);
@@ -159,7 +159,7 @@ public class Main implements IHash{
 	    PerfectHashing p = new PerfectHash();
 		p.setUniverseOfKeys(arrSet);
 		try{
-			p.buildTable();
+			System.out.println(p.buildTable());
 		}catch(Exception e)
 		{
 			throw new RuntimeException(e);
