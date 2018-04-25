@@ -54,7 +54,7 @@ public class PerfectHash implements PerfectHashing{
 				}else{
 				//	System.out.println("collision in outer hash table");
 				sub= hashTable[hashedKey];
-				sub.addToUniverseOfKeys(keys[i]);
+				counter+=sub.addToUniverseOfKeys(keys[i]);
 				}
 				
 			}
@@ -86,6 +86,11 @@ public class PerfectHash implements PerfectHashing{
 		}
 		
 		public int addToUniverseOfKeys(int key) {
+			for(int i=0;i<keys.size();i++){
+				if(keys.get(i).intValue()==key){
+					return 0;
+				}
+			}
 			this.hashTableSubSize=(int) Math.pow(numberOfKeys+1,2);
 			 hashTableSub = new int[this.hashTableSubSize] ;
 			numberOfKeys++;
