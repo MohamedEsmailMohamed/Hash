@@ -40,7 +40,8 @@ public class PerfectHash implements PerfectHashing{
 
 	@Override
 	public int buildTable() throws Exception {
-		int counter=0;
+		LinkedList<Integer> filledSlots = new LinkedList<Integer>();
+
 		if(this.keys==null){
 			throw new RuntimeException("Can't Build without setting setOfKeys");
 		}else{
@@ -49,15 +50,22 @@ public class PerfectHash implements PerfectHashing{
 				subTable sub;
 				if(hashTable[hashedKey]==null){
 				 sub = new subTable();
-					counter+=sub.addToUniverseOfKeys(keys[i]);
+				 sub.add(keys[i]);
 					hashTable[hashedKey]=sub;
+					filledSlots.add(hashedKey);
 				}else{
-				//	System.out.println("collision in outer hash table");
 				sub= hashTable[hashedKey];
-				counter+=sub.addToUniverseOfKeys(keys[i]);
+				 sub.add(keys[i]);
+
 				}
 				
 			}
+		}
+		int counter =0;
+		System.out.println(filledSlots.size());
+		for (int i=0;i<filledSlots.size();i++){
+			//System.out.println("--"+i+"   "+counter);
+			counter+=hashTable[filledSlots.get(i)].build();
 		}
 		return counter;
 	}
@@ -84,58 +92,35 @@ public class PerfectHash implements PerfectHashing{
 		public HashFunction getuniversalHashFunctions() {
 			return this.universalHashSub;
 		}
-		
-		public int addToUniverseOfKeys(int key) {
+		public void add(int key) {
 			for(int i=0;i<keys.size();i++){
 				if(keys.get(i).intValue()==key){
-					return 0;
+					return ;
 				}
 			}
-			this.hashTableSubSize=(int) Math.pow(numberOfKeys+1,2);
-			 hashTableSub = new int[this.hashTableSubSize] ;
-			numberOfKeys++;
-			universalHashSub = new UniversalHash(hashTableSubSize);
 			Integer intt =new Integer(key);
 			keys.add(intt);
-		ListIterator<Integer> i =keys.listIterator();
+			
+		}
+		public int build(){
+			this.hashTableSubSize=(int) Math.pow(keys.size(),2);
+			 hashTableSub = new int[this.hashTableSubSize] ;
+				this.universalHashSub = new UniversalHash(hashTableSubSize);
+
+			 ListIterator<Integer> i =keys.listIterator();
 				while(i.hasNext()){
 					int k =i.next().intValue();
-					//System.out.println(universalHashSub.hashKey(k)+" uni hashing--ky "+k);
-					if(hashTableSub[universalHashSub.hashKey(k)]==k){
-						i.remove();
-						continue;
-					}else
+					
 					if(hashTableSub[universalHashSub.hashKey(k)]!=EmptySlot){
-
-						return rebuild();
+						return build()+1;
 					}
 
 					hashTableSub[universalHashSub.hashKey(k)]=k;
 				}
 				return 0;
+		
 		}
-		private int rebuild(){
-			
-			 hashTableSub = new int[this.hashTableSubSize] ;
-			this.universalHashSub= new UniversalHash(this.hashTableSubSize);
-			ListIterator<Integer> i =keys.listIterator();
-			while(i.hasNext()){
-				int k =i.next().intValue();
-				
-			//	System.out.println(universalHashSub.hashKey(k)+" uni hashing--RE---ky "+k);
-				if(hashTableSub[universalHashSub.hashKey(k)]==k){
-					continue;
-				}else
-				if(hashTableSub[universalHashSub.hashKey(k)]!=EmptySlot){
-					//System.out.println("coll in inner");
-					return rebuild()+1;
-				}
-				hashTableSub[universalHashSub.hashKey(k)]=k;
-			}
-			//System.out.println("rebuilt Success");
-			return 0;
-		}
-		public boolean get(int key) {
+				public boolean get(int key) {
 			return this.hashTableSub[universalHashSub.hashKey(key)]!=EmptySlot ;
 		}
 
