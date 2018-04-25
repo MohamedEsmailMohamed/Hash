@@ -52,7 +52,7 @@ public class PerfectHash implements PerfectHashing{
 					counter+=sub.addToUniverseOfKeys(keys[i]);
 					hashTable[hashedKey]=sub;
 				}else{
-					//System.out.println("collision in outer hash table");
+				//	System.out.println("collision in outer hash table");
 				sub= hashTable[hashedKey];
 				sub.addToUniverseOfKeys(keys[i]);
 				}
@@ -66,10 +66,6 @@ public class PerfectHash implements PerfectHashing{
 	public HashFunction getuniversalHashFunctions() {
 		return this.universalHash;
 	}
-	
-	
-	
-	
 	
 	
 	
@@ -94,18 +90,21 @@ public class PerfectHash implements PerfectHashing{
 			 hashTableSub = new int[this.hashTableSubSize] ;
 			numberOfKeys++;
 			universalHashSub = new UniversalHash(hashTableSubSize);
-			keys.add(new Integer(key));
+			Integer intt =new Integer(key);
+			keys.add(intt);
 		ListIterator<Integer> i =keys.listIterator();
 				while(i.hasNext()){
 					int k =i.next().intValue();
 					//System.out.println(universalHashSub.hashKey(k)+" uni hashing--ky "+k);
 					if(hashTableSub[universalHashSub.hashKey(k)]==k){
+						i.remove();
 						continue;
 					}else
 					if(hashTableSub[universalHashSub.hashKey(k)]!=EmptySlot){
+
 						return rebuild();
-						
 					}
+
 					hashTableSub[universalHashSub.hashKey(k)]=k;
 				}
 				return 0;
@@ -118,12 +117,12 @@ public class PerfectHash implements PerfectHashing{
 			while(i.hasNext()){
 				int k =i.next().intValue();
 				
-				//System.out.println(universalHashSub.hashKey(k)+" uni hashing--RE---ky "+k);
+			//	System.out.println(universalHashSub.hashKey(k)+" uni hashing--RE---ky "+k);
 				if(hashTableSub[universalHashSub.hashKey(k)]==k){
 					continue;
 				}else
 				if(hashTableSub[universalHashSub.hashKey(k)]!=EmptySlot){
-					
+					//System.out.println("coll in inner");
 					return rebuild()+1;
 				}
 				hashTableSub[universalHashSub.hashKey(k)]=k;

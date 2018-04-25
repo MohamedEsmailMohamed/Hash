@@ -22,12 +22,12 @@ public class Main {
 			//		"D:\\collage\\2nd year\\2nd Semester\\5 Data Structure II\\2_Labs\\testCases_lab3\\keys100001000000.txt");
 		
 		
+//			FileReader in = new FileReader(
+//					"D:\\collage\\2nd year\\2nd Semester\\5 Data Structure II\\2_Labs\\testCases_lab3\\keys10000001000000.txt");
+//		
+		
 			FileReader in = new FileReader(
-					"D:\\collage\\2nd year\\2nd Semester\\5 Data Structure II\\2_Labs\\testCases_lab3\\keys10000001000000.txt");
-		
-		
-			//FileReader in = new FileReader(
-			//		"C:\\Users\\ABDO\\Desktop\\2nd S 2nd Y\\tc3\\testCases_lab4\\keys10000001000000.txt");
+					"C:\\Users\\ABDO\\Desktop\\2nd S 2nd Y\\tc3\\testCases_lab4\\keys10000001000000.txt");
 			
 			
 			
@@ -74,6 +74,9 @@ public class Main {
 			
 			keysFounded = true;
 			for(int i = 0; i < arrSet.length; i++){
+				if(!p.get(arrSet[i])){
+					System.out.println(arrSet[i]);
+				}
 				keysFounded = keysFounded && p.get(arrSet[i]);
 			}
 			System.out.println(keysFounded);
